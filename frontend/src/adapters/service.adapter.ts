@@ -3,7 +3,8 @@ import { CreateServiceInput, UpdateServiceStatusInput } from "@/domain/service.s
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
 export const serviceAdapter = {
-  // 1. Obtener todos los servicios
+
+  //Obtener todos los servicios
   async getServices() {
     try {
 

@@ -6,10 +6,12 @@ import { createServiceSchema, CreateServiceInput } from "@/domain/service.schema
 import { serviceAdapter } from "@/adapters/service.adapter";
 import { Button, Input, Textarea } from "@heroui/react";
 import { useState } from "react";
+import { useServices } from "@/context/ServiceContext";
 
 export function ServiceForm() {
     const [loading, setLoading] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
+    const { refreshServices } = useServices();
 
     const {
         register,
@@ -26,9 +28,10 @@ export function ServiceForm() {
             setSuccessMessage("");
 
             await serviceAdapter.createService(data);
-
+            await refreshServices();
+            
             setSuccessMessage("¡Servicio creado exitosamente!");
-            reset();
+            reset(); // Limpia el formulario
         } catch (error) {
             console.error("Error al enviar el servicio:", error);
         } finally {
@@ -42,7 +45,7 @@ export function ServiceForm() {
 
             <Input
                 label="Título del Servicio"
-                placeholder="Ej: Llanta pinchada"
+                placeholder="Ej: Desarrollo Backend"
                 variant="bordered"
                 {...register("title")}
                 isInvalid={!!errors.title}
