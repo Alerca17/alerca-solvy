@@ -1,5 +1,6 @@
 import { IsEnum, IsNotEmpty } from 'class-validator';
-import { ServiceStatus } from '../../services/domain/enums/service-status.enum';
+import { ServiceStatus } from '../../domain/enums/service-status.enum';
+
 
 
 export class ChangeServiceStatusDto {
