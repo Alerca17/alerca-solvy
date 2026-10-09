@@ -1,4 +1,4 @@
-import { CreateServiceInput } from "@/domain/service.schema";
+import { CreateServiceInput, UpdateServiceStatusInput } from "@/domain/service.schema";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
@@ -6,13 +6,13 @@ export const serviceAdapter = {
   // 1. Obtener todos los servicios
   async getServices() {
     try {
-      
+
       const res = await fetch(`${API_URL}/services`);
-      
+
       if (!res.ok) {
         throw new Error(`Error al obtener los servicios: ${res.statusText}`);
       }
-      
+
       return await res.json();
     } catch (error) {
       console.error("Adapter Error (getServices):", error);
@@ -25,7 +25,7 @@ export const serviceAdapter = {
     try {
 
       const res = await fetch(`${API_URL}/services/${id}`);
-      
+
       if (!res.ok) {
         throw new Error(`Servicio con ID ${id} no encontrado`);
       }
@@ -55,6 +55,28 @@ export const serviceAdapter = {
       return await response.json();
     } catch (error) {
       console.error("Adapter Error (createService):", error);
+      throw error;
+    }
+  },
+
+  //Actualizar el estado de un servicio
+  async updateServiceStatus(id: string | number, statusData: UpdateServiceStatusInput) {
+    try {
+      const res = await fetch(`${API_URL}/services/${id}/status`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(statusData),
+      });
+
+      if (!res.ok) {
+        throw new Error(`Error al actualizar el estado del servicio ${id}`);
+      }
+
+      return await res.json();
+    } catch (error) {
+      console.error(`Adapter Error (updateServiceStatus - ${id}):`, error);
       throw error;
     }
   },
