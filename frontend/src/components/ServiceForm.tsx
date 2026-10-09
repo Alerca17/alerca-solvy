@@ -29,9 +29,9 @@ export function ServiceForm() {
 
             await serviceAdapter.createService(data);
             await refreshServices();
-            
+
             setSuccessMessage("¡Servicio creado exitosamente!");
-            reset(); // Limpia el formulario
+            reset();
         } catch (error) {
             console.error("Error al enviar el servicio:", error);
         } finally {
@@ -45,7 +45,7 @@ export function ServiceForm() {
 
             <Input
                 label="Título del Servicio"
-                placeholder="Ej: Desarrollo Backend"
+                placeholder="Ej: Llanta pinchada"
                 variant="bordered"
                 {...register("title")}
                 isInvalid={!!errors.title}
