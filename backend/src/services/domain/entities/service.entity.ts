@@ -45,11 +45,5 @@ export class Service {
 
         this.status = newStatus;
     }
-
-
-
-
-
-
 }
 
